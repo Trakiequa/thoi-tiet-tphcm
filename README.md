@@ -7,13 +7,6 @@ Dashboard thời tiết trực tiếp cho TP. Hồ Chí Minh — nhiệt độ h
 ![status](https://img.shields.io/badge/status-active-brightgreen)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 
-<!--
-📸 Chèn ảnh/GIF demo ở đây trước khi đăng lên GitHub — đây là thứ đầu tiên
-người xem repo nhìn thấy. Chụp màn hình dashboard lúc đã tải xong dữ liệu:
-
-![demo](./demo.gif)
--->
-
 ## ✨ Tính năng
 
 - Nhiệt độ, cảm giác thực tế, độ ẩm, gió, lượng mưa hiện tại
@@ -46,11 +39,3 @@ open thoi-tiet-tphcm.html   # hoặc double-click file trong Finder/Explorer
 - [ ] Gợi ý nhanh "có nên đi xe máy không" theo thời tiết hiện tại
 - [ ] Cài được như app trên điện thoại (PWA), xem lại được khi mất mạng
 - [ ] Xuất ảnh chia sẻ nhanh lên mạng xã hội
-
-## 🤖 Được xây dựng cùng AI
-
-Dự án là một thử nghiệm phối hợp giữa hai trợ lý AI: **Claude** phụ trách review giao diện, trải nghiệm người dùng và nội dung hiển thị; **ChatGPT/Codex** phụ trách lập trình và triển khai. Repo này là kết quả của vài vòng góp ý — triển khai qua lại giữa hai bên.
-
-## 📄 Giấy phép
-
-Chưa có license — nếu muốn cho phép người khác tự do sử dụng/sửa đổi, thêm file `LICENSE` với nội dung [MIT License](https://choosealicense.com/licenses/mit/) là lựa chọn phổ biến nhất.
