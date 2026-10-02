@@ -37,7 +37,7 @@
 
     <section class="card ai-card" aria-label="Trợ lý thời tiết AI">
       <div class="ai-head">
-        <h2>🤖 Trợ lý thời tiết AI</h2>
+        <h2> Trợ lý thời tiết AI</h2>
         <button id="aiAnalyze" type="button">Phân tích hôm nay</button>
       </div>
       <p class="hint">Giờ mưa do thuật toán tính từ Open-Meteo — AI chỉ diễn giải bằng lời, không tự bịa số liệu.</p>
@@ -57,7 +57,7 @@
     const CODES={0:['☀️','Trời quang'],1:['🌤️','Ít mây'],2:['⛅','Có mây'],3:['☁️','Nhiều mây'],45:['🌫️','Sương mù'],48:['🌫️','Sương mù'],51:['🌦️','Mưa phùn nhẹ'],53:['🌦️','Mưa phùn'],55:['🌧️','Mưa phùn dày'],61:['🌦️','Mưa nhẹ'],63:['🌧️','Mưa'],65:['🌧️','Mưa lớn'],71:['🌨️','Tuyết nhẹ'],80:['🌦️','Mưa rào nhẹ'],81:['🌧️','Mưa rào'],82:['⛈️','Mưa rào lớn'],95:['⛈️','Dông'],96:['⛈️','Dông có mưa đá'],99:['⛈️','Dông có mưa đá']};
     const DAYS=['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
     const CACHE_KEY='weather_hcm_latest_v2';
-    const AI_WORKER_URL='https://REPLACE-WITH-YOUR-WORKER.workers.dev'; // TODO: dán URL worker thật sau khi deploy (xem worker.js)
+    const AI_WORKER_URL='https://thoi-tiet-ai.kienquantran396.workers.dev'; // TODO: dán URL worker thật sau khi deploy (xem worker.js)
     let lastHours=null, lastCurrent=null;
     const fmt=new Intl.DateTimeFormat('vi-VN',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Ho_Chi_Minh'});
     const dateFmt=new Intl.DateTimeFormat('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',timeZone:'Asia/Ho_Chi_Minh'});
