@@ -11,6 +11,7 @@
     .hero,.card{border:1px solid var(--border);background:var(--surface);box-shadow:0 16px 45px rgba(0,0,0,.15);backdrop-filter:blur(15px);border-radius:24px}.hero{padding:28px;display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin-bottom:18px}.current{display:flex;align-items:center;gap:20px}.weather-icon{width:100px;height:100px;flex:0 0 100px;font-size:5rem;display:grid;place-items:center;filter:drop-shadow(0 8px 14px rgba(0,0,0,.2))}.temp{font-size:clamp(4rem,10vw,6.8rem);font-weight:750;line-height:.9;letter-spacing:-.08em}.condition{margin:10px 0 0;font-size:1.15rem;font-weight:650}.feels{color:var(--muted);margin:6px 0 0}.feels.attention{color:var(--warn);font-weight:700}.feels.danger{color:var(--danger);font-weight:700}
     .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;align-content:center}.stat{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.08)}.stat span{display:block;color:var(--muted);font-size:.78rem}.stat strong{display:block;margin-top:5px;font-size:1.12rem}.stat.attention strong{color:var(--warn)}.stat.danger strong{color:var(--danger)}.stat.good strong{color:var(--ok)}
     .warning{display:none;margin:0 0 18px;padding:15px 18px;border-radius:18px;border:1px solid rgba(255,123,123,.55);background:rgba(120,25,35,.28);box-shadow:0 10px 30px rgba(0,0,0,.12)}.warning.show{display:block}.warning strong{display:block;margin-bottom:4px;color:#fff0c2}.warning p{margin:0;color:#ffe6e6;font-size:.92rem;line-height:1.45}.warning.storm{border-color:rgba(255,209,102,.7);background:rgba(111,72,12,.3)}
+    .ai-card{padding:20px 22px;margin-top:18px}.ai-card .ai-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.ai-card h2{margin:0;font-size:1.05rem;display:flex;align-items:center;gap:8px}.ai-card p.hint{margin:4px 0 0;color:var(--muted);font-size:.85rem}.ai-card .ai-body{margin-top:14px}.ai-card .ai-empty{color:var(--muted);font-size:.9rem;margin:0}.ai-card .ai-summary{font-size:1rem;line-height:1.55;margin:0 0 10px}.ai-card .ai-advice{background:rgba(255,255,255,.08);border-radius:14px;padding:12px 14px;font-weight:650;margin:0 0 10px}.ai-card .ai-meta{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.8rem;margin:0}.ai-card .ai-meta b{color:var(--ink)}.ai-card .ai-error{color:var(--danger);font-size:.88rem;margin:0}.ai-card button[disabled]{opacity:.6;cursor:progress}
     .section-title{margin:28px 0 12px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}h2{margin:0;font-size:1.18rem}.section-title p{margin:0;color:var(--muted);font-size:.86rem}.card{padding:20px;overflow:hidden}.hourly{display:grid;grid-template-columns:repeat(24,86px);gap:10px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}.hour{scroll-snap-align:start;text-align:center;padding:13px 7px;min-height:190px;border-radius:16px;background:rgba(255,255,255,.065);border:1px solid transparent}.hour.now{background:rgba(98,217,255,.16);border-color:rgba(98,217,255,.5)}.hour time{display:block;color:var(--muted);font-size:.78rem}.hour .small-icon{display:block;font-size:1.6rem;margin:9px 0 6px}.hour .degree{display:block;font-size:1.1rem;font-weight:700}.rain{color:var(--rain);font-size:.77rem;margin-top:8px}.rain-amount{display:block;color:#d8eaff;font-size:.72rem;margin-top:3px}.bar{height:5px;margin:9px 6px 0;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.13)}.bar b{display:block;height:100%;background:linear-gradient(90deg,#61caff,#bee6ff);border-radius:inherit}.day-marker{display:flex;align-items:center;justify-content:center;min-height:190px;padding:8px 4px;border-left:2px solid rgba(255,211,106,.7);color:var(--yellow);font-size:.75rem;font-weight:750;writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:.03em;scroll-snap-align:start}
     .chart-card{padding:21px 22px 18px;margin-top:18px}.chart-wrap{height:210px;position:relative;margin-top:14px}.chart-labels{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:space-between;pointer-events:none;padding-top:7px}.chart-labels span{color:#b9cae1;font-size:.72rem;transform:translateX(-50%);white-space:nowrap}.chart-labels span:first-child{transform:none}.chart-labels span:last-child{transform:translateX(-100%)}.legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.82rem}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--yellow)}.legend i.r{background:var(--rain)}.error{padding:22px;text-align:center;color:#ffe6a7}.source{margin:16px 3px 0;color:#aabbd1;font-size:.77rem;text-align:center}.stale{color:var(--warn)!important}
     @media(max-width:650px){main{width:min(100% - 22px,1120px);padding-top:24px}header{align-items:flex-start;flex-direction:column}.update{text-align:left}.hero{grid-template-columns:1fr;padding:22px}.weather-icon{width:78px;flex-basis:78px;font-size:4rem}.current{gap:12px}.stats{grid-template-columns:repeat(2,1fr)}.hourly{grid-template-columns:repeat(24,82px)}.hour,.day-marker{min-height:195px}.chart-wrap{height:170px}}
@@ -34,6 +35,17 @@
       </div>
     </section>
 
+    <section class="card ai-card" aria-label="Trợ lý thời tiết AI">
+      <div class="ai-head">
+        <h2>🤖 Trợ lý thời tiết AI</h2>
+        <button id="aiAnalyze" type="button">Phân tích hôm nay</button>
+      </div>
+      <p class="hint">Giờ mưa do thuật toán tính từ Open-Meteo — AI chỉ diễn giải bằng lời, không tự bịa số liệu.</p>
+      <div class="ai-body" id="aiBody">
+        <p class="ai-empty">Bấm "Phân tích hôm nay" để AI tóm tắt xu hướng mưa và gợi ý giờ ra ngoài phù hợp.</p>
+      </div>
+    </section>
+
     <div class="section-title"><h2>24 giờ sắp tới</h2><p>Nhiệt độ · mưa · lượng mưa theo giờ</p></div>
     <section class="card"><div class="hourly" id="hourly"></div></section>
 
@@ -45,6 +57,8 @@
     const CODES={0:['☀️','Trời quang'],1:['🌤️','Ít mây'],2:['⛅','Có mây'],3:['☁️','Nhiều mây'],45:['🌫️','Sương mù'],48:['🌫️','Sương mù'],51:['🌦️','Mưa phùn nhẹ'],53:['🌦️','Mưa phùn'],55:['🌧️','Mưa phùn dày'],61:['🌦️','Mưa nhẹ'],63:['🌧️','Mưa'],65:['🌧️','Mưa lớn'],71:['🌨️','Tuyết nhẹ'],80:['🌦️','Mưa rào nhẹ'],81:['🌧️','Mưa rào'],82:['⛈️','Mưa rào lớn'],95:['⛈️','Dông'],96:['⛈️','Dông có mưa đá'],99:['⛈️','Dông có mưa đá']};
     const DAYS=['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
     const CACHE_KEY='weather_hcm_latest_v2';
+    const AI_WORKER_URL='https://REPLACE-WITH-YOUR-WORKER.workers.dev'; // TODO: dán URL worker thật sau khi deploy (xem worker.js)
+    let lastHours=null, lastCurrent=null;
     const fmt=new Intl.DateTimeFormat('vi-VN',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Ho_Chi_Minh'});
     const dateFmt=new Intl.DateTimeFormat('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',timeZone:'Asia/Ho_Chi_Minh'});
     function weather(code){return CODES[code]||['🌡️','Không xác định']}
@@ -85,6 +99,7 @@
       el('uv').textContent=uv==null?'—':Number(uv).toFixed(1);el('aqi').textContent=aqi==null?'—':Math.round(aqi);
       setStat('humidityStat',cls(hum,80,90));setStat('windStat',cls(wind,20,35));setStat('precipStat',cls(precip,5,15));setStat('rainChanceStat',cls(rainChance,70,90));setStat('uvStat',uv==null?null:cls(uv,6,8));setStat('aqiStat',aqi==null?null:cls(aqi,50,100));
       warningFor(hours);
+      lastHours=hours;lastCurrent={temperature_2m:c.temperature_2m,apparent_temperature:c.apparent_temperature,weather_code:c.weather_code,relative_humidity_2m:c.relative_humidity_2m,wind_speed_10m:c.wind_speed_10m};
       el('updated').classList.toggle('stale',stale);el('updated').textContent=stale?'Dữ liệu cũ · cập nhật lần cuối '+new Date(data.savedAt).toLocaleString('vi-VN'):'Cập nhật lúc '+fmt.format(new Date())+' · GMT+7';
       let previousDate='';
       el('hourly').innerHTML=hours.map((x,i)=>{const d=new Date(x.time);const dateKey=x.time.slice(0,10);let marker='';if(dateKey!==previousDate){if(previousDate)marker=`<div class="day-marker">${dateFmt.format(d)}</div>`;previousDate=dateKey}const [ic]=weather(x.weather_code);return marker+`<article class="hour ${i===0?'now':''}"><time>${i===0?'Bây giờ':fmt.format(d)}</time><span class="small-icon">${ic}</span><strong class="degree">${Math.round(x.temperature_2m)}°</strong><div class="rain">💧 ${x.precipitation_probability??0}%</div><span class="rain-amount">☔ ${(Number(x.precipitation)||0).toFixed(1)} mm</span><div class="bar"><b style="width:${x.precipitation_probability??0}%"></b></div></article>`}).join('');
@@ -102,6 +117,25 @@
       try{const data=await fetchData();const payload={...data,savedAt:Date.now()};localStorage.setItem(CACHE_KEY,JSON.stringify(payload));render(payload,false)}
       catch(err){const raw=localStorage.getItem(CACHE_KEY);if(raw){try{const cached=JSON.parse(raw);render(cached,true);return}catch(e){}}el('updated').textContent='Không thể tải dữ liệu — hãy thử lại';el('hourly').innerHTML='<div class="error">Không kết nối được nguồn thời tiết và chưa có dữ liệu lưu trước đó. Vui lòng kiểm tra Internet và bấm Cập nhật.</div>'}
     }
+    function renderAiIdle(msg){el('aiBody').innerHTML=`<p class="ai-empty">${msg}</p>`}
+    function renderAiError(msg){el('aiBody').innerHTML=`<p class="ai-error">⚠️ ${msg}</p>`}
+    function renderAiResult(r){
+      const range=(r.rain_start&&r.rain_end)?`<span><b>Mưa:</b> ${r.rain_start}–${r.rain_end}</span>`:`<span><b>Mưa:</b> không đáng kể</span>`;
+      el('aiBody').innerHTML=`<p class="ai-summary">${r.summary||''}</p>${r.advice?`<p class="ai-advice">💡 ${r.advice}</p>`:''}<div class="ai-meta">${range}<span><b>Độ tin cậy:</b> ${r.confidence||'—'}</span></div>`
+    }
+    async function analyzeToday(){
+      if(!lastHours){renderAiError('Chưa có dữ liệu thời tiết, đợi trang tải xong rồi thử lại.');return}
+      const btn=el('aiAnalyze');btn.disabled=true;btn.textContent='Đang phân tích…';renderAiIdle('Đang phân tích…');
+      try{
+        const res=await fetch(AI_WORKER_URL,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({current:lastCurrent,hours:lastHours})});
+        if(!res.ok)throw Error('upstream_error');
+        const data=await res.json();
+        if(data.error)throw Error(data.error);
+        renderAiResult(data)
+      }catch(err){renderAiError('Không thể phân tích lúc này. Hãy thử lại sau ít phút.')}
+      finally{btn.disabled=false;btn.textContent='Phân tích hôm nay'}
+    }
+    el('aiAnalyze').addEventListener('click',analyzeToday);
     el('refresh').addEventListener('click',load);load();
   </script>
 </body>
