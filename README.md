@@ -33,9 +33,9 @@ open thoi-tiet-tphcm.html   # hoặc double-click file trong Finder/Explorer
 
 ## Dự định phát triển tiếp
 
-- [ ] Cảnh báo giông/mưa lớn nổi bật ngay đầu trang
+- [x] Cảnh báo giông/mưa lớn nổi bật ngay đầu trang
 - [ ] Cảnh báo nguy cơ ngập đường dựa trên lượng mưa/giờ
-- [ ] Thêm chỉ số UV và chất lượng không khí (AQI)
+- [x] Thêm chỉ số UV và chất lượng không khí (AQI)
 - [ ] Gợi ý nhanh "có nên đi xe máy không" theo thời tiết hiện tại
 - [ ] Cài được như app trên điện thoại (PWA), xem lại được khi mất mạng
 - [ ] Xuất ảnh chia sẻ nhanh lên mạng xã hội
