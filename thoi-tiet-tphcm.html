@@ -37,7 +37,7 @@
 
     <section class="card ai-card" aria-label="Trợ lý thời tiết AI">
       <div class="ai-head">
-        <h2> Trợ lý thời tiết AI</h2>
+        <h2>🤖 Trợ lý thời tiết AI</h2>
         <button id="aiAnalyze" type="button">Phân tích hôm nay</button>
       </div>
       <p class="hint">Giờ mưa do thuật toán tính từ Open-Meteo — AI chỉ diễn giải bằng lời, không tự bịa số liệu.</p>
@@ -128,7 +128,7 @@
       const btn=el('aiAnalyze');btn.disabled=true;btn.textContent='Đang phân tích…';renderAiIdle('Đang phân tích…');
       try{
         const res=await fetch(AI_WORKER_URL,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({current:lastCurrent,hours:lastHours})});
-        if(!res.ok)throw Error('upstream_error');
+        if(!res.ok){console.error('AI worker error',res.status,await res.text().catch(()=>''));throw Error('upstream_error')}
         const data=await res.json();
         if(data.error)throw Error(data.error);
         renderAiResult(data)
