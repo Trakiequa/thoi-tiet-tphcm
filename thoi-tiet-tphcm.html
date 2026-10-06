@@ -3,23 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Thời tiết TP.HCM hiện tại và dự báo 24 giờ tới: nhiệt độ, lượng mưa, UV, chất lượng không khí.">
+  <meta name="theme-color" content="#071b3a">
   <title>Thời tiết TP.HCM — 24 giờ tới</title>
   <style>
     :root{--ink:#f7fbff;--muted:#c9d8eb;--surface:rgba(11,30,61,.56);--border:rgba(255,255,255,.16);--blue:#62d9ff;--yellow:#ffd36a;--rain:#8bcbff;--ok:#7ee787;--warn:#ffd166;--danger:#ff7b7b}
     *{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 12% 0%,#1668a5 0,transparent 35%),radial-gradient(circle at 88% 10%,#3c478a 0,transparent 38%),linear-gradient(135deg,#071b3a,#102a56 60%,#132a49)}
-    main{width:min(1120px,calc(100% - 32px));margin:auto;padding:42px 0 34px}header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}.eyebrow{margin:0 0 6px;color:var(--blue);font-weight:700;letter-spacing:.08em;font-size:.78rem;text-transform:uppercase}h1{margin:0;font-size:clamp(1.7rem,4vw,2.7rem);letter-spacing:-.035em}.update{color:var(--muted);font-size:.87rem;text-align:right;line-height:1.5}button{border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.1);color:white;padding:10px 15px;cursor:pointer;font:inherit}button:hover{background:rgba(255,255,255,.18)}
+    main{width:min(1120px,calc(100% - 32px));margin:auto;padding:42px 0 34px}header{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}.eyebrow{margin:0 0 6px;color:var(--blue);font-weight:700;letter-spacing:.08em;font-size:.78rem;text-transform:uppercase}h1{margin:0;font-size:clamp(1.7rem,4vw,2.7rem);letter-spacing:-.035em}.update{color:var(--muted);font-size:.87rem;text-align:right;line-height:1.5}button{border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.1);color:white;padding:10px 15px;cursor:pointer;font:inherit}button:hover{background:rgba(255,255,255,.18)}button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
     .hero,.card{border:1px solid var(--border);background:var(--surface);box-shadow:0 16px 45px rgba(0,0,0,.15);backdrop-filter:blur(15px);border-radius:24px}.hero{padding:28px;display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin-bottom:18px}.current{display:flex;align-items:center;gap:20px}.weather-icon{width:100px;height:100px;flex:0 0 100px;font-size:5rem;display:grid;place-items:center;filter:drop-shadow(0 8px 14px rgba(0,0,0,.2))}.temp{font-size:clamp(4rem,10vw,6.8rem);font-weight:750;line-height:.9;letter-spacing:-.08em}.condition{margin:10px 0 0;font-size:1.15rem;font-weight:650}.feels{color:var(--muted);margin:6px 0 0}.feels.attention{color:var(--warn);font-weight:700}.feels.danger{color:var(--danger);font-weight:700}
     .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;align-content:center}.stat{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.08)}.stat span{display:block;color:var(--muted);font-size:.78rem}.stat strong{display:block;margin-top:5px;font-size:1.12rem}.stat.attention strong{color:var(--warn)}.stat.danger strong{color:var(--danger)}.stat.good strong{color:var(--ok)}
     .warning{display:none;margin:0 0 18px;padding:15px 18px;border-radius:18px;border:1px solid rgba(255,123,123,.55);background:rgba(120,25,35,.28);box-shadow:0 10px 30px rgba(0,0,0,.12)}.warning.show{display:block}.warning strong{display:block;margin-bottom:4px;color:#fff0c2}.warning p{margin:0;color:#ffe6e6;font-size:.92rem;line-height:1.45}.warning.storm{border-color:rgba(255,209,102,.7);background:rgba(111,72,12,.3)}
     .ai-card{padding:20px 22px;margin-top:18px}.ai-card .ai-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.ai-card h2{margin:0;font-size:1.05rem;display:flex;align-items:center;gap:8px}.ai-card p.hint{margin:4px 0 0;color:var(--muted);font-size:.85rem}.ai-card .ai-body{margin-top:14px}.ai-card .ai-empty{color:var(--muted);font-size:.9rem;margin:0}.ai-card .ai-summary{font-size:1rem;line-height:1.55;margin:0 0 10px}.ai-card .ai-advice{background:rgba(255,255,255,.08);border-radius:14px;padding:12px 14px;font-weight:650;margin:0 0 10px}.ai-card .ai-meta{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.8rem;margin:0}.ai-card .ai-meta b{color:var(--ink)}.ai-card .ai-error{color:var(--danger);font-size:.88rem;margin:0}.ai-card button[disabled]{opacity:.6;cursor:progress}
-    .section-title{margin:28px 0 12px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}h2{margin:0;font-size:1.18rem}.section-title p{margin:0;color:var(--muted);font-size:.86rem}.card{padding:20px;overflow:hidden}.hourly{display:grid;grid-template-columns:repeat(24,86px);gap:10px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}.hour{scroll-snap-align:start;text-align:center;padding:13px 7px;min-height:190px;border-radius:16px;background:rgba(255,255,255,.065);border:1px solid transparent}.hour.now{background:rgba(98,217,255,.16);border-color:rgba(98,217,255,.5)}.hour time{display:block;color:var(--muted);font-size:.78rem}.hour .small-icon{display:block;font-size:1.6rem;margin:9px 0 6px}.hour .degree{display:block;font-size:1.1rem;font-weight:700}.rain{color:var(--rain);font-size:.77rem;margin-top:8px}.rain-amount{display:block;color:#d8eaff;font-size:.72rem;margin-top:3px}.bar{height:5px;margin:9px 6px 0;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.13)}.bar b{display:block;height:100%;background:linear-gradient(90deg,#61caff,#bee6ff);border-radius:inherit}.day-marker{display:flex;align-items:center;justify-content:center;min-height:190px;padding:8px 4px;border-left:2px solid rgba(255,211,106,.7);color:var(--yellow);font-size:.75rem;font-weight:750;writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:.03em;scroll-snap-align:start}
-    .chart-card{padding:21px 22px 18px;margin-top:18px}.chart-wrap{height:210px;position:relative;margin-top:14px}.chart-labels{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:space-between;pointer-events:none;padding-top:7px}.chart-labels span{color:#b9cae1;font-size:.72rem;transform:translateX(-50%);white-space:nowrap}.chart-labels span:first-child{transform:none}.chart-labels span:last-child{transform:translateX(-100%)}.legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.82rem}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--yellow)}.legend i.r{background:var(--rain)}.error{padding:22px;text-align:center;color:#ffe6a7}.source{margin:16px 3px 0;color:#aabbd1;font-size:.77rem;text-align:center}.stale{color:var(--warn)!important}
-    @media(max-width:650px){main{width:min(100% - 22px,1120px);padding-top:24px}header{align-items:flex-start;flex-direction:column}.update{text-align:left}.hero{grid-template-columns:1fr;padding:22px}.weather-icon{width:78px;flex-basis:78px;font-size:4rem}.current{gap:12px}.stats{grid-template-columns:repeat(2,1fr)}.hourly{grid-template-columns:repeat(24,82px)}.hour,.day-marker{min-height:195px}.chart-wrap{height:170px}}
+    .section-title{margin:28px 0 12px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}h2{margin:0;font-size:1.18rem}.section-title p{margin:0;color:var(--muted);font-size:.86rem}.card{padding:20px;overflow:hidden}.hourly{display:grid;grid-template-columns:repeat(24,86px);gap:10px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}.hour{scroll-snap-align:start;text-align:center;padding:13px 7px;min-height:150px;border-radius:16px;background:rgba(255,255,255,.065);border:1px solid transparent}.hour.now{background:rgba(98,217,255,.16);border-color:rgba(98,217,255,.5)}.hour time{display:block;color:var(--muted);font-size:.78rem}.hour .small-icon{display:block;font-size:1.6rem;margin:9px 0 6px}.hour .degree{display:block;font-size:1.1rem;font-weight:700}.rain-amount{display:block;color:#d8eaff;font-size:.72rem;margin-top:10px}.rain-amount.wet{color:var(--rain);font-weight:700}.day-marker{display:flex;align-items:center;justify-content:center;min-height:150px;padding:8px 4px;border-left:2px solid rgba(255,211,106,.7);color:var(--yellow);font-size:.75rem;font-weight:750;writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:.03em;scroll-snap-align:start}
+    .chart-card{padding:21px 22px 18px;margin-top:18px}.chart-wrap{height:210px;position:relative;margin-top:14px}.chart-labels{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:space-between;pointer-events:none;padding-top:7px}.chart-labels span{color:#b9cae1;font-size:.72rem;transform:translateX(-50%);white-space:nowrap}.chart-labels span:first-child{transform:none}.chart-labels span:last-child{transform:translateX(-100%)}.legend{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.82rem}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:var(--yellow)}.legend i.r{background:var(--rain)}.error{padding:22px;text-align:center;color:#ffe6a7}.source a{color:#c9d8eb}.source{margin:16px 3px 0;color:#aabbd1;font-size:.77rem;text-align:center}.stale{color:var(--warn)!important}
+    .picker{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 4px}.combo{position:relative;max-width:100%}.combo-btn{display:flex;align-items:center;gap:10px;max-width:100%;font-weight:650}.combo-btn #comboLabel{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.combo-btn .caret{opacity:.7}
+    .combo-panel{position:absolute;z-index:30;top:calc(100% + 8px);left:0;width:min(380px,calc(100vw - 22px));padding:10px;border:1px solid var(--border);border-radius:18px;background:#0d2347;box-shadow:0 22px 55px rgba(0,0,0,.5)}.combo-panel[hidden]{display:none}
+    .combo-search{width:100%;padding:11px 13px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.08);color:var(--ink);font:inherit;outline:none}.combo-search:focus{border-color:var(--blue)}
+    .combo-list{list-style:none;margin:8px 0 0;padding:0;max-height:min(320px,50vh);overflow:auto;overscroll-behavior:contain}.opt{display:flex;justify-content:space-between;gap:10px;padding:10px 11px;border-radius:10px;cursor:pointer}.opt.active{background:rgba(98,217,255,.18)}.opt.sel .w-name{color:var(--blue);font-weight:700}.opt .w-type{align-self:center;color:var(--muted);font-size:.74rem}.opt-empty{padding:14px 11px;color:var(--muted);font-size:.9rem}
+    .place-sub{margin:10px 2px 0;color:var(--muted);font-size:.86rem;line-height:1.45;min-height:1.2em}.place-sub.warn{color:var(--warn)}.grid-note{margin:4px 2px 18px;color:#9fb2cc;font-size:.78rem;line-height:1.45}
+    #app.busy .hero,#app.busy .card,#app.busy .warning{opacity:.5;transition:opacity .2s}
+    @media(max-width:650px){main{width:min(100% - 22px,1120px);padding-top:24px}header{align-items:flex-start;flex-direction:column}.update{text-align:left}.hero{grid-template-columns:1fr;padding:22px}.weather-icon{width:78px;flex-basis:78px;font-size:4rem}.current{gap:12px}.stats{grid-template-columns:repeat(2,1fr)}.hourly{grid-template-columns:repeat(24,82px)}.hour,.day-marker{min-height:155px}.chart-wrap{height:170px}}
   </style>
 </head>
 <body>
-  <main>
-    <header><div><p class="eyebrow">Thời tiết trực tiếp</p><h1>TP. Hồ Chí Minh</h1></div><div class="update"><span id="updated">Đang tải dữ liệu…</span><br><button id="refresh" type="button">↻ Cập nhật</button></div></header>
+  <main id="app">
+    <header><div><p class="eyebrow">Thời tiết trực tiếp · TP. Hồ Chí Minh</p><h1 id="placeName">Đang xác định…</h1></div><div class="update"><span id="updated">Đang tải dữ liệu…</span><br><button id="refresh" type="button">↻ Cập nhật</button></div></header>
+
+    <section class="picker" aria-label="Chọn phường hoặc xã">
+      <div class="combo" id="combo">
+        <button id="comboBtn" class="combo-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="comboPanel"><span id="comboLabel">Chọn phường/xã</span><span class="caret" aria-hidden="true">▾</span></button>
+        <div class="combo-panel" id="comboPanel" hidden>
+          <input id="comboSearch" class="combo-search" type="search" role="combobox" aria-expanded="true" aria-controls="comboList" aria-autocomplete="list" placeholder="Tìm phường/xã (gõ không dấu cũng được)" autocomplete="off" spellcheck="false" aria-label="Tìm phường hoặc xã">
+          <ul id="comboList" class="combo-list" role="listbox" aria-label="Danh sách phường và xã"></ul>
+        </div>
+      </div>
+      <button id="gpsBtn" type="button">📍 Vị trí của tôi</button>
+    </section>
+    <p class="place-sub" id="placeSub" aria-live="polite"></p>
+    <p class="grid-note">Số liệu lấy theo lưới mô hình khoảng 10 km (chất lượng không khí có thể thô hơn), nên các phường gần nhau thường cho kết quả giống nhau.</p>
 
     <section id="warning" class="warning" aria-live="polite"><strong id="warningTitle"></strong><p id="warningText"></p></section>
 
@@ -29,7 +50,7 @@
         <div class="stat" id="humidityStat"><span>Độ ẩm</span><strong id="humidity">—</strong></div>
         <div class="stat" id="windStat"><span>Gió</span><strong id="wind">—</strong></div>
         <div class="stat" id="precipStat"><span>Lượng mưa</span><strong id="precip">—</strong></div>
-        <div class="stat" id="rainChanceStat"><span>Khả năng mưa (giờ này)</span><strong id="rainChance">—</strong></div>
+        <div class="stat" id="rainTotalStat"><span>Tổng mưa 24 giờ tới</span><strong id="rainTotal">—</strong></div>
         <div class="stat" id="uvStat"><span>UV hiện tại</span><strong id="uv">—</strong></div>
         <div class="stat" id="aqiStat"><span>US AQI hiện tại</span><strong id="aqi">—</strong></div>
       </div>
@@ -41,7 +62,7 @@
         <button id="aiAnalyze" type="button">Phân tích hôm nay</button>
       </div>
       <p class="hint">Giờ mưa do thuật toán tính từ Open-Meteo — AI chỉ diễn giải bằng lời, không tự bịa số liệu.</p>
-      <div class="ai-body" id="aiBody">
+      <div class="ai-body" id="aiBody" aria-live="polite">
         <p class="ai-empty">Bấm "Phân tích hôm nay" để AI tóm tắt xu hướng mưa và gợi ý giờ ra ngoài phù hợp.</p>
       </div>
     </section>
@@ -50,19 +71,23 @@
     <section class="card"><div class="hourly" id="hourly"></div></section>
 
     <section class="card chart-card"><div class="section-title" style="margin:0"><h2>Diễn biến nhiệt độ</h2><div class="legend"><span><i></i>Nhiệt độ</span><span><i class="r"></i>Xác suất mưa</span></div></div><div class="chart-wrap"><svg id="chart" viewBox="0 0 1000 210" preserveAspectRatio="none" width="100%" height="100%" aria-label="Biểu đồ nhiệt độ dự báo"></svg><div class="chart-labels" id="chartLabels"></div></div></section>
-    <p class="source">Nguồn dữ liệu: Open-Meteo Weather Forecast + Air Quality. Dữ liệu được lưu tạm để hiển thị bản gần nhất khi mất kết nối.</p>
+    <p class="source">Nguồn dữ liệu: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> Weather Forecast + Air Quality. Ranh giới phường/xã: <a href="https://github.com/lqtue/phuongnao" target="_blank" rel="noopener">Long Ngo</a>; danh sách đơn vị hành chính: vietnam-provinces. Vị trí GPS chỉ được xử lý trên thiết bị của bạn. Dữ liệu được lưu tạm để hiển thị bản gần nhất khi mất kết nối.</p>
   </main>
 
   <script>
     const CODES={0:['☀️','Trời quang'],1:['🌤️','Ít mây'],2:['⛅','Có mây'],3:['☁️','Nhiều mây'],45:['🌫️','Sương mù'],48:['🌫️','Sương mù'],51:['🌦️','Mưa phùn nhẹ'],53:['🌦️','Mưa phùn'],55:['🌧️','Mưa phùn dày'],61:['🌦️','Mưa nhẹ'],63:['🌧️','Mưa'],65:['🌧️','Mưa lớn'],71:['🌨️','Tuyết nhẹ'],80:['🌦️','Mưa rào nhẹ'],81:['🌧️','Mưa rào'],82:['⛈️','Mưa rào lớn'],95:['⛈️','Dông'],96:['⛈️','Dông có mưa đá'],99:['⛈️','Dông có mưa đá']};
     const DAYS=['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
-    const CACHE_KEY='weather_hcm_latest_v2';
-    const AI_WORKER_URL='https://thoi-tiet-ai.kienquantran396.workers.dev'; // TODO: dán URL worker thật sau khi deploy (xem worker.js)
+    const CACHE_KEY='weather_hcm_latest_v3';
+    const AI_WORKER_URL='https://thoi-tiet-ai.kienquantran396.workers.dev';
     let lastHours=null, lastCurrent=null;
     const fmt=new Intl.DateTimeFormat('vi-VN',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Ho_Chi_Minh'});
-    const dateFmt=new Intl.DateTimeFormat('vi-VN',{weekday:'long',day:'2-digit',month:'2-digit',timeZone:'Asia/Ho_Chi_Minh'});
-    function weather(code){return CODES[code]||['🌡️','Không xác định']}
+        function weather(code){return CODES[code]||['🌡️','Không xác định']}
     function el(id){return document.getElementById(id)}
+    // Giờ của Open-Meteo đã là giờ Việt Nam ("2026-10-03T17:00"), nên cắt thẳng từ chuỗi, không qua new Date().
+    function hhmm(t){return t.slice(11,16)}
+    function dayLabel(dateKey){const [y,m,d]=dateKey.split('-').map(Number);return DAYS[new Date(Date.UTC(y,m-1,d)).getUTCDay()]+', '+String(d).padStart(2,'0')+'/'+String(m).padStart(2,'0')}
+    function whenText(t,hours){return hhmm(t)+(t.slice(0,10)===hours[0].time.slice(0,10)?' hôm nay':' ngày mai')}
+    function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
     function cls(v,warn,danger){return v>=danger?'danger':v>=warn?'attention':'good'}
     function setStat(id,level){const x=el(id);x.classList.remove('good','attention','danger');if(level)x.classList.add(level)}
     function currentUv(aq,idx){return aq?.hourly?.uv_index?.[idx]}
@@ -74,15 +99,15 @@
       let grid='';for(let i=0;i<4;i++){const y=15+i*50,v=(max-i*range/3).toFixed(0);grid+=`<line x1="0" x2="1000" y1="${y}" y2="${y}" stroke="rgba(255,255,255,.13)"/><text x="4" y="${y-3}" fill="#b9cae1" font-size="13">${v}°</text>`}
       const rain=hours.map((x,i)=>{const h=Math.max(0,Math.min(100,x.precipitation_probability||0))*1.25;return `<rect x="${i/(hours.length)*1000+7}" y="${190-h}" width="${Math.max(4,1000/hours.length-14)}" height="${h}" rx="3" fill="rgba(139,203,255,.52)"/>`}).join('');
       el('chart').innerHTML=grid+rain+`<polyline points="${points}" fill="none" stroke="#ffd36a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="${points}" fill="none" stroke="rgba(255,255,255,.33)" stroke-width="1"/>`;
-      const marks=[0,6,12,18,23];el('chartLabels').innerHTML=marks.map(i=>`<span style="left:${i/23*100}%">${fmt.format(new Date(hours[i].time))}</span>`).join('')
+      const marks=[0,6,12,18,23];el('chartLabels').innerHTML=marks.map(i=>`<span style="left:${i/23*100}%">${hhmm(hours[i].time)}</span>`).join('')
     }
 
     function warningFor(hours){
       const storm=hours.find(x=>[95,96,99].includes(x.weather_code));
       const heavy=hours.find(x=>[65,82].includes(x.weather_code)||x.precipitation>=10||(x.precipitation_probability>=80&&x.precipitation>=5));
       const box=el('warning');
-      if(storm){box.className='warning show storm';el('warningTitle').textContent='⛈️ Cảnh báo dông';el('warningText').textContent=`Có khả năng dông trong 24 giờ tới, đáng chú ý từ ${fmt.format(new Date(storm.time))}. Hạn chế hoạt động ngoài trời khi dông xuất hiện.`;return}
-      if(heavy){box.className='warning show';el('warningTitle').textContent='🌧️ Cảnh báo mưa lớn';el('warningText').textContent=`Có giờ dự báo mưa lớn trong 24 giờ tới, đáng chú ý từ ${fmt.format(new Date(heavy.time))}${heavy.precipitation!=null?' với khoảng '+heavy.precipitation.toFixed(1)+' mm':''}.` ;return}
+      if(storm){box.className='warning show storm';el('warningTitle').textContent='⛈️ Cảnh báo dông';el('warningText').textContent=`Có khả năng dông trong 24 giờ tới, đáng chú ý từ ${whenText(storm.time,hours)}. Hạn chế hoạt động ngoài trời khi dông xuất hiện.`;return}
+      if(heavy){box.className='warning show';el('warningTitle').textContent='🌧️ Cảnh báo mưa lớn';el('warningText').textContent=`Có giờ dự báo mưa lớn trong 24 giờ tới, đáng chú ý từ ${whenText(heavy.time,hours)}${heavy.precipitation!=null?' với khoảng '+heavy.precipitation.toFixed(1)+' mm':''}.` ;return}
       box.className='warning';el('warningTitle').textContent='';el('warningText').textContent=''
     }
 
@@ -93,50 +118,230 @@
       const [emoji,text]=weather(c.weather_code);
       el('icon').textContent=emoji;el('temperature').textContent=Math.round(c.temperature_2m)+'°';el('condition').textContent=text;
       const diff=Math.abs(c.temperature_2m-c.apparent_temperature);el('feels').textContent='Cảm giác như '+Math.round(c.apparent_temperature)+'°';el('feels').className='feels '+(diff>=8?'danger':diff>=5?'attention':'');
-      const wind=Math.round(c.wind_speed_10m), precip=Number(c.precipitation||0), rainChance=h.precipitation_probability[idx]??0, hum=c.relative_humidity_2m;
-      el('humidity').textContent=hum+'%';el('wind').textContent=wind+' km/h';el('precip').textContent=precip.toFixed(1)+' mm';el('rainChance').textContent=rainChance+'%';
-      const aqIdx=aq?.hourly?.time?.findIndex(t=>t.slice(0,13)===c.time.slice(0,13))??-1;const uv=h.uv_index?.[idx];const aqi=aqIdx>=0?currentAqi(aq,aqIdx):undefined;
+      const wind=Math.round(c.wind_speed_10m), precip=Number(c.precipitation||0), rainTotal=hours.reduce((sum,x)=>sum+(Number(x.precipitation)||0),0), hum=c.relative_humidity_2m;
+      el('humidity').textContent=hum+'%';el('wind').textContent=wind+' km/h';el('precip').textContent=precip.toFixed(1)+' mm';el('rainTotal').textContent=rainTotal.toFixed(1)+' mm';
+      const aqIdx=aq?.hourly?.time?.findIndex(t=>t.slice(0,13)===c.time.slice(0,13))??-1;const uv=h.uv_index?.[start];const aqi=aqIdx>=0?currentAqi(aq,aqIdx):undefined;
       el('uv').textContent=uv==null?'—':Number(uv).toFixed(1);el('aqi').textContent=aqi==null?'—':Math.round(aqi);
-      setStat('humidityStat',cls(hum,80,90));setStat('windStat',cls(wind,20,35));setStat('precipStat',cls(precip,5,15));setStat('rainChanceStat',cls(rainChance,70,90));setStat('uvStat',uv==null?null:cls(uv,6,8));setStat('aqiStat',aqi==null?null:cls(aqi,50,100));
+      setStat('humidityStat',cls(hum,80,90));setStat('windStat',cls(wind,20,35));setStat('precipStat',cls(precip,5,15));setStat('rainTotalStat',cls(rainTotal,10,30));setStat('uvStat',uv==null?null:cls(uv,6,8));setStat('aqiStat',aqi==null?null:cls(aqi,50,100));
       warningFor(hours);
       lastHours=hours;lastCurrent={temperature_2m:c.temperature_2m,apparent_temperature:c.apparent_temperature,weather_code:c.weather_code,relative_humidity_2m:c.relative_humidity_2m,wind_speed_10m:c.wind_speed_10m};
       el('updated').classList.toggle('stale',stale);el('updated').textContent=stale?'Dữ liệu cũ · cập nhật lần cuối '+new Date(data.savedAt).toLocaleString('vi-VN'):'Cập nhật lúc '+fmt.format(new Date())+' · GMT+7';
       let previousDate='';
-      el('hourly').innerHTML=hours.map((x,i)=>{const d=new Date(x.time);const dateKey=x.time.slice(0,10);let marker='';if(dateKey!==previousDate){if(previousDate)marker=`<div class="day-marker">${dateFmt.format(d)}</div>`;previousDate=dateKey}const [ic]=weather(x.weather_code);return marker+`<article class="hour ${i===0?'now':''}"><time>${i===0?'Bây giờ':fmt.format(d)}</time><span class="small-icon">${ic}</span><strong class="degree">${Math.round(x.temperature_2m)}°</strong><div class="rain">💧 ${x.precipitation_probability??0}%</div><span class="rain-amount">☔ ${(Number(x.precipitation)||0).toFixed(1)} mm</span><div class="bar"><b style="width:${x.precipitation_probability??0}%"></b></div></article>`}).join('');
+      el('hourly').innerHTML=hours.map((x,i)=>{const dateKey=x.time.slice(0,10);let marker='';if(dateKey!==previousDate){if(previousDate)marker=`<div class="day-marker">${dayLabel(dateKey)}</div>`;previousDate=dateKey}const [ic]=weather(x.weather_code);return marker+`<article class="hour ${i===0?'now':''}"><time>${i===0?'Bây giờ':hhmm(x.time)}</time><span class="small-icon">${ic}</span><strong class="degree">${Math.round(x.temperature_2m)}°</strong><span class="rain-amount${(Number(x.precipitation)||0)>=1?' wet':''}">☔ ${(Number(x.precipitation)||0).toFixed(1)} mm</span></article>`}).join('');
       drawChart(hours)
     }
 
-    async function fetchData(){
-      const weatherUrl='https://api.open-meteo.com/v1/forecast?latitude=10.8231&longitude=106.6297&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,apparent_temperature,weather_code,precipitation_probability,precipitation,uv_index&timezone=Asia%2FHo_Chi_Minh&forecast_days=2';
-      const airUrl='https://air-quality-api.open-meteo.com/v1/air-quality?latitude=10.8231&longitude=106.6297&hourly=us_aqi,uv_index&timezone=Asia%2FHo_Chi_Minh&forecast_days=2';
+    /* ===== Vị trí: danh sách phường/xã, GPS, dropdown ===== */
+    // [mã đơn vị, tên đầy đủ, loại (0 phường · 1 xã · 2 đặc khu), vĩ độ, kinh độ tâm]
+    // 168 đơn vị hành chính cấp xã của TP.HCM từ 01/07/2025. Tọa độ tâm chỉ dùng để lấy thời tiết.
+    const WARDS_RAW=[
+      [25747,"Phường Thủ Dầu Một",0,10.9655,106.6616],[25750,"Phường Phú Lợi",0,10.9891,106.6777],[25760,"Phường Bình Dương",0,11.0531,106.6861],
+      [25768,"Phường Phú An",0,11.0458,106.602],[25771,"Phường Chánh Hiệp",0,11.0117,106.6402],[25777,"Xã Dầu Tiếng",1,11.3475,106.3884],
+      [25780,"Xã Minh Thạnh",1,11.4483,106.475],[25792,"Xã Long Hòa",1,11.3313,106.5015],[25807,"Xã Thanh An",1,11.263,106.421],
+      [25813,"Phường Bến Cát",0,11.2078,106.6274],[25819,"Xã Trừ Văn Thố",1,11.346,106.5806],[25822,"Xã Bàu Bàng",1,11.2897,106.6232],
+      [25837,"Phường Chánh Phú Hòa",0,11.1844,106.67],[25840,"Phường Long Nguyên",0,11.1836,106.5592],[25843,"Phường Tây Nam",0,11.175,106.494],
+      [25846,"Phường Thới Hòa",0,11.1041,106.6233],[25849,"Phường Hòa Lợi",0,11.0817,106.6497],[25858,"Xã Phú Giáo",1,11.3023,106.8574],
+      [25864,"Xã Phước Thành",1,11.3921,106.7584],[25867,"Xã An Long",1,11.3272,106.699],[25882,"Xã Phước Hòa",1,11.2425,106.7641],
+      [25888,"Phường Tân Uyên",0,11.0892,106.8196],[25891,"Phường Tân Khánh",0,10.9998,106.7461],[25906,"Xã Bắc Tân Uyên",1,11.1694,106.8661],
+      [25909,"Xã Thường Tân",1,11.1002,106.9166],[25912,"Phường Vĩnh Tân",0,11.1471,106.7127],[25915,"Phường Bình Cơ",0,11.1517,106.7649],
+      [25920,"Phường Tân Hiệp",0,11.0564,106.7467],[25942,"Phường Dĩ An",0,10.9062,106.762],[25945,"Phường Tân Đông Hiệp",0,10.9442,106.7627],
+      [25951,"Phường Đông Hòa",0,10.8935,106.8003],[25966,"Phường Lái Thiêu",0,10.9147,106.6998],[25969,"Phường Thuận Giao",0,10.9655,106.7172],
+      [25975,"Phường An Phú",0,10.9499,106.7378],[25978,"Phường Thuận An",0,10.9418,106.6785],[25987,"Phường Bình Hòa",0,10.8998,106.7202],
+      [26506,"Phường Vũng Tàu",0,10.3563,107.0756],[26526,"Phường Tam Thắng",0,10.3699,107.0946],[26536,"Phường Rạch Dừa",0,10.39,107.1134],
+      [26542,"Phường Phước Thắng",0,10.423,107.1625],[26545,"Xã Long Sơn",1,10.4513,107.1003],[26560,"Phường Bà Rịa",0,10.4924,107.1816],
+      [26566,"Phường Long Hương",0,10.4998,107.1496],[26572,"Phường Tam Long",0,10.5268,107.2142],[26575,"Xã Ngãi Giao",1,10.6208,107.213],
+      [26584,"Xã Xuân Sơn",1,10.6186,107.3315],[26590,"Xã Bình Giã",1,10.6716,107.2823],[26596,"Xã Châu Đức",1,10.7337,107.2081],
+      [26608,"Xã Kim Long",1,10.6806,107.2143],[26617,"Xã Nghĩa Thành",1,10.5786,107.2417],[26620,"Xã Hồ Tràm",1,10.5222,107.3975],
+      [26632,"Xã Xuyên Mộc",1,10.5489,107.4662],[26638,"Xã Bàu Lâm",1,10.7307,107.4177],[26641,"Xã Hòa Hội",1,10.63,107.4239],
+      [26647,"Xã Hòa Hiệp",1,10.6997,107.4972],[26656,"Xã Bình Châu",1,10.5925,107.5325],[26659,"Xã Long Điền",1,10.4676,107.2238],
+      [26662,"Xã Long Hải",1,10.4105,107.2241],[26680,"Xã Đất Đỏ",1,10.5203,107.3036],[26686,"Xã Phước Hải",1,10.45,107.2998],
+      [26704,"Phường Phú Mỹ",0,10.6109,107.0456],[26710,"Phường Tân Hải",0,10.5118,107.103],[26713,"Phường Tân Phước",0,10.5311,107.0547],
+      [26725,"Phường Tân Thành",0,10.6558,107.1331],[26728,"Xã Châu Pha",1,10.5861,107.1317],[26732,"Đặc khu Côn Đảo",2,8.6912,106.6162],
+      [26737,"Phường Tân Định",0,10.7926,106.6907],[26740,"Phường Sài Gòn",0,10.7813,106.7027],[26743,"Phường Bến Thành",0,10.7716,106.6932],
+      [26758,"Phường Cầu Ông Lãnh",0,10.7622,106.6898],[26767,"Phường An Phú Đông",0,10.8625,106.6931],[26773,"Phường Thới An",0,10.8792,106.6661],
+      [26782,"Phường Tân Thới Hiệp",0,10.8746,106.6397],[26785,"Phường Trung Mỹ Tây",0,10.8601,106.6224],[26791,"Phường Đông Hưng Thuận",0,10.8357,106.6221],
+      [26800,"Phường Linh Xuân",0,10.8685,106.775],[26803,"Phường Tam Bình",0,10.8727,106.733],[26809,"Phường Hiệp Bình",0,10.8433,106.7206],
+      [26824,"Phường Thủ Đức",0,10.8415,106.7554],[26833,"Phường Long Bình",0,10.8673,106.8362],[26842,"Phường Tăng Nhơn Phú",0,10.8439,106.8055],
+      [26848,"Phường Phước Long",0,10.8179,106.775],[26857,"Phường Long Phước",0,10.8065,106.8503],[26860,"Phường Long Trường",0,10.7934,106.8124],
+      [26876,"Phường An Nhơn",0,10.8358,106.6876],[26878,"Phường An Hội Đông",0,10.8505,106.6657],[26882,"Phường An Hội Tây",0,10.8431,106.6424],
+      [26884,"Phường Gò Vấp",0,10.8358,106.6734],[26890,"Phường Hạnh Thông",0,10.8213,106.6828],[26898,"Phường Thông Tây Hội",0,10.8416,106.6545],
+      [26905,"Phường Bình Lợi Trung",0,10.8231,106.7005],[26911,"Phường Bình Quới",0,10.8212,106.7383],[26929,"Phường Bình Thạnh",0,10.811,106.7049],
+      [26944,"Phường Gia Định",0,10.8004,106.6989],[26956,"Phường Thạnh Mỹ Tây",0,10.7981,106.7176],[26968,"Phường Tân Sơn Nhất",0,10.7948,106.6589],
+      [26977,"Phường Tân Sơn Hòa",0,10.8074,106.6665],[26983,"Phường Bảy Hiền",0,10.7922,106.6486],[26995,"Phường Tân Hòa",0,10.7809,106.6548],
+      [27004,"Phường Tân Bình",0,10.8004,106.6423],[27007,"Phường Tân Sơn",0,10.8208,106.6507],[27013,"Phường Tây Thạnh",0,10.81,106.621],
+      [27019,"Phường Tân Sơn Nhì",0,10.799,106.6318],[27022,"Phường Phú Thọ Hòa",0,10.7906,106.6271],[27028,"Phường Phú Thạnh",0,10.7719,106.6281],
+      [27031,"Phường Tân Phú",0,10.7774,106.639],[27043,"Phường Đức Nhuận",0,10.8055,106.6769],[27058,"Phường Cầu Kiệu",0,10.7981,106.6851],
+      [27073,"Phường Phú Nhuận",0,10.7942,106.6729],[27094,"Phường An Khánh",0,10.7856,106.7279],[27097,"Phường Bình Trưng",0,10.7937,106.7621],
+      [27112,"Phường Cát Lái",0,10.7632,106.7724],[27139,"Phường Xuân Hòa",0,10.7831,106.6885],[27142,"Phường Nhiêu Lộc",0,10.7855,106.6761],
+      [27154,"Phường Bàn Cờ",0,10.771,106.682],[27163,"Phường Hòa Hưng",0,10.7776,106.6698],[27169,"Phường Diên Hồng",0,10.7692,106.6623],
+      [27190,"Phường Vườn Lài",0,10.7667,106.6739],[27211,"Phường Hòa Bình",0,10.7702,106.6453],[27226,"Phường Phú Thọ",0,10.7675,106.6544],
+      [27232,"Phường Bình Thới",0,10.7626,106.6422],[27238,"Phường Minh Phụng",0,10.7576,106.649],[27259,"Phường Xóm Chiếu",0,10.7602,106.712],
+      [27265,"Phường Khánh Hội",0,10.7591,106.7046],[27286,"Phường Vĩnh Hội",0,10.7555,106.697],[27301,"Phường Chợ Quán",0,10.7574,106.6807],
+      [27316,"Phường An Đông",0,10.7547,106.6716],[27343,"Phường Chợ Lớn",0,10.7533,106.6591],[27349,"Phường Phú Lâm",0,10.7529,106.6304],
+      [27364,"Phường Bình Phú",0,10.7401,106.6297],[27367,"Phường Bình Tây",0,10.7509,106.645],[27373,"Phường Bình Tiên",0,10.7426,106.643],
+      [27418,"Phường Chánh Hưng",0,10.7443,106.6789],[27424,"Phường Bình Đông",0,10.717,106.6334],[27427,"Phường Phú Định",0,10.7258,106.6307],
+      [27439,"Phường Bình Hưng Hòa",0,10.8057,106.6045],[27442,"Phường Bình Tân",0,10.8053,106.5922],[27448,"Phường Bình Trị Đông",0,10.774,106.6059],
+      [27457,"Phường Tân Tạo",0,10.7471,106.5837],[27460,"Phường An Lạc",0,10.736,106.612],[27475,"Phường Tân Hưng",0,10.736,106.7071],
+      [27478,"Phường Tân Thuận",0,10.7553,106.7346],[27484,"Phường Phú Thuận",0,10.7234,106.7439],[27487,"Phường Tân Mỹ",0,10.7264,106.7264],
+      [27496,"Xã Tân An Hội",1,10.9717,106.4686],[27508,"Xã An Nhơn Tây",1,11.1016,106.4826],[27511,"Xã Nhuận Đức",1,11.0322,106.4986],
+      [27526,"Xã Thái Mỹ",1,11.022,106.4201],[27541,"Xã Phú Hòa Đông",1,10.9848,106.5733],[27544,"Xã Bình Mỹ",1,10.9731,106.6142],
+      [27553,"Xã Củ Chi",1,10.9519,106.5328],[27559,"Xã Hóc Môn",1,10.902,106.5913],[27568,"Xã Đông Thạnh",1,10.9024,106.6415],
+      [27577,"Xã Xuân Thới Sơn",1,10.89,106.5567],[27592,"Xã Bà Điểm",1,10.8523,106.5742],[27595,"Xã Tân Nhựt",1,10.7071,106.5648],
+      [27601,"Xã Vĩnh Lộc",1,10.8191,106.5425],[27604,"Xã Tân Vĩnh Lộc",1,10.7898,106.566],[27610,"Xã Bình Lợi",1,10.7541,106.5162],
+      [27619,"Xã Bình Hưng",1,10.7068,106.6598],[27628,"Xã Hưng Long",1,10.6594,106.6446],[27637,"Xã Bình Chánh",1,10.6714,106.5887],
+      [27655,"Xã Nhà Bè",1,10.6941,106.7219],[27658,"Xã Hiệp Phước",1,10.6309,106.7355],[27664,"Xã Cần Giờ",1,10.4427,106.9118],
+      [27667,"Xã Bình Khánh",1,10.5967,106.8573],[27673,"Xã An Thới Đông",1,10.4913,106.8109],[27676,"Xã Thạnh An",1,10.5333,106.975]
+    ];
+    const TYPE_LABEL=['Phường','Xã','Đặc khu'];
+    function fold(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d')}
+    const WARDS=WARDS_RAW.map(([code,name,t,lat,lon])=>({code,name,type:TYPE_LABEL[t],bare:name.replace(/^(Phường|Xã|Đặc khu) /,''),lat,lon,key:fold(name),bkey:fold(name.replace(/^(Phường|Xã|Đặc khu) /,''))}));
+    const WARDS_SORTED=[...WARDS].sort((a,b)=>a.bare.localeCompare(b.bare,'vi'));
+    const WARD_BY_CODE=new Map(WARDS.map(w=>[w.code,w]));
+    const DEFAULT_CODE=26743; // Phường Bến Thành (trung tâm)
+    const LOC_KEY='weather_hcm_loc_v1';
+    const AI_IDLE='Bấm "Phân tích hôm nay" để AI tóm tắt xu hướng mưa và gợi ý giờ ra ngoài phù hợp.';
+    let ward=null,locMode='default',locSeq=0,geoPromise=null,GEO=null;
+
+    /* GEO-BEGIN */
+    // Ranh giới đã đơn giản hóa (wards-geo.json): mã hóa delta, đơn vị 1e-4 độ. Điểm nằm trong phường nếu thuộc số lẻ vòng (quy tắc chẵn-lẻ, xử lý được lỗ và đảo).
+    function inRing(p,x,y){let c=false;for(let i=0,j=p.length-2;i<p.length;j=i,i+=2){const xi=p[i],yi=p[i+1],xj=p[j],yj=p[j+1];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c}
+    function decodeGeo(j){const q=j.q||10000,out=[];for(const code of Object.keys(j.w)){let minx=1e9,miny=1e9,maxx=-1e9,maxy=-1e9;const rings=j.w[code].map(flat=>{const p=new Float64Array(flat.length);let x=flat[0],y=flat[1];p[0]=x/q;p[1]=y/q;for(let i=2;i<flat.length;i+=2){x+=flat[i];y+=flat[i+1];p[i]=x/q;p[i+1]=y/q}for(let i=0;i<p.length;i+=2){if(p[i]<minx)minx=p[i];if(p[i]>maxx)maxx=p[i];if(p[i+1]<miny)miny=p[i+1];if(p[i+1]>maxy)maxy=p[i+1]}return p});out.push({code:+code,rings,bbox:[minx,miny,maxx,maxy]})}return out}
+    function geoFind(geo,lat,lon){for(const g of geo){const b=g.bbox;if(lon<b[0]||lon>b[2]||lat<b[1]||lat>b[3])continue;let inside=false;for(const r of g.rings)if(inRing(r,lon,lat))inside=!inside;if(inside)return g.code}return null}
+    /* GEO-END */
+
+    // Tải ranh giới khi cần. Nếu thiếu file, tự dùng chế độ "phường có tâm gần nhất" (kém chính xác hơn).
+    function loadGeo(){if(!geoPromise)geoPromise=fetch('./wards-geo.json').then(r=>{if(!r.ok)throw Error('geo');return r.json()}).then(j=>(GEO=decodeGeo(j))).catch(()=>null);return geoPromise}
+    function nearestWard(lat,lon){let best=null,bd=Infinity;const k=Math.cos(lat*Math.PI/180);for(const w of WARDS){const dx=(lon-w.lon)*k,dy=lat-w.lat,d=dx*dx+dy*dy;if(d<bd){bd=d;best=w}}return{ward:best,km:Math.sqrt(bd)*111.32}}
+
+    function saveLoc(){try{localStorage.setItem(LOC_KEY,JSON.stringify({mode:locMode,code:ward.code}))}catch(e){}}
+    function readLoc(){try{return JSON.parse(localStorage.getItem(LOC_KEY)||'null')}catch(e){return null}}
+    function setPlaceNote(text,warn){const n=el('placeSub');n.textContent=text||'';n.classList.toggle('warn',!!warn)}
+    function paintPlace(note,warn){el('placeName').textContent=ward.name;el('comboLabel').textContent=ward.name;document.title='Thời tiết '+ward.name+' — TP.HCM';setPlaceNote(note,warn)}
+    function selectWard(w,mode,note,warn){
+      const changed=!ward||ward.code!==w.code;
+      ward=w;locMode=mode;saveLoc();paintPlace(note,warn);
+      if(changed){lastHours=null;lastCurrent=null;renderAiIdle(AI_IDLE);load()}
+    }
+    function resetGpsBtn(){const b=el('gpsBtn');b.disabled=false;b.textContent='📍 Vị trí của tôi'}
+
+    function locateMe(){
+      const seq=++locSeq,btn=el('gpsBtn'),done=()=>{if(seq===locSeq)resetGpsBtn()};
+      if(!('geolocation' in navigator)){setPlaceNote('Trình duyệt này không hỗ trợ định vị — hãy chọn phường trong danh sách.',true);return}
+      btn.disabled=true;btn.textContent='📍 Đang định vị…';setPlaceNote('Đang xác định vị trí của bạn…');
+      navigator.geolocation.getCurrentPosition(async pos=>{
+        if(seq!==locSeq)return;
+        const {latitude:lat,longitude:lon,accuracy}=pos.coords;
+        const geo=await loadGeo();if(seq!==locSeq)return;
+        let w=null,approx=false;
+        if(geo){const c=geoFind(geo,lat,lon);if(c)w=WARD_BY_CODE.get(c)}
+        if(!w){
+          const n=nearestWard(lat,lon);
+          if(n.km<=(geo?8:25)){w=n.ward;approx=true}
+          else{done();setPlaceNote('Có vẻ bạn đang ở ngoài TP.HCM (cách phường gần nhất khoảng '+Math.round(n.km)+' km). Đang xem: '+ward.name+' — hãy chọn phường trong danh sách nếu cần.',true);return}
+        }
+        done();
+        const lowAcc=accuracy>1500;
+        let note='📍 Theo vị trí của bạn'+(approx?' (ước lượng phường gần nhất)':'');
+        if(lowAcc)note+=' · sai số vị trí khoảng '+(accuracy>=10000?Math.round(accuracy/1000):(accuracy/1000).toFixed(1))+' km, có thể chưa đúng phường — hãy chọn thủ công nếu cần.';
+        selectWard(w,'gps',note,lowAcc||approx)
+      },err=>{
+        if(seq!==locSeq)return;done();
+        const msg=err.code===1?'Bạn chưa cho phép truy cập vị trí. Hãy bật quyền vị trí cho trang này trong trình duyệt, hoặc chọn phường trong danh sách.':err.code===3?'Hết thời gian chờ định vị. Hãy thử lại hoặc chọn phường trong danh sách.':'Không xác định được vị trí. Hãy chọn phường trong danh sách.';
+        if(err.code===1&&locMode==='gps'){locMode='default';saveLoc()}
+        setPlaceNote(msg+' Đang xem: '+ward.name+'.',true)
+      },{enableHighAccuracy:false,timeout:10000,maximumAge:300000});
+    }
+
+    /* --- Ô chọn phường/xã có tìm kiếm (không phân biệt dấu) --- */
+    const combo={items:[],active:-1};
+    function comboIsOpen(){return !el('comboPanel').hidden}
+    function openCombo(){el('comboPanel').hidden=false;el('comboBtn').setAttribute('aria-expanded','true');const s=el('comboSearch');s.value='';renderCombo('');s.focus()}
+    function closeCombo(focusBtn){el('comboPanel').hidden=true;el('comboBtn').setAttribute('aria-expanded','false');if(focusBtn)el('comboBtn').focus()}
+    function renderCombo(q){
+      const f=fold(q.trim()),cur=ward?ward.code:-1;
+      combo.items=WARDS_SORTED.filter(w=>!f||w.key.includes(f));
+      if(f)combo.items.sort((a,b)=>(a.bkey.startsWith(f)?0:1)-(b.bkey.startsWith(f)?0:1)); // tên bắt đầu bằng từ khóa lên trước (sort ổn định, giữ thứ tự A-Z)
+      el('comboList').innerHTML=combo.items.length?combo.items.map((w,i)=>`<li role="option" class="opt${w.code===cur?' sel':''}" id="opt${w.code}" data-i="${i}" aria-selected="${w.code===cur}"><span class="w-name">${esc(w.bare)}</span><span class="w-type">${w.type}</span></li>`).join(''):'<li class="opt-empty">Không tìm thấy phường/xã phù hợp</li>';
+      setActive(combo.items.length?(f?0:Math.max(0,combo.items.findIndex(w=>w.code===cur))):-1)
+    }
+    function setActive(i){
+      combo.active=i;const list=el('comboList'),s=el('comboSearch');
+      list.querySelectorAll('.opt.active').forEach(n=>n.classList.remove('active'));
+      if(i<0){s.removeAttribute('aria-activedescendant');return}
+      const n=list.children[i];if(!n)return;n.classList.add('active');s.setAttribute('aria-activedescendant',n.id);n.scrollIntoView({block:'nearest'})
+    }
+    function pickManual(w){locSeq++;resetGpsBtn();closeCombo(true);selectWard(w,'manual','Bạn đã chọn phường này thủ công. Bấm 📍 để dùng vị trí của bạn.')}
+    el('comboBtn').addEventListener('click',()=>comboIsOpen()?closeCombo(false):openCombo());
+    el('comboSearch').addEventListener('input',e=>renderCombo(e.target.value));
+    el('comboSearch').addEventListener('keydown',e=>{
+      if(e.key==='ArrowDown'){e.preventDefault();if(combo.items.length)setActive(Math.min(combo.items.length-1,combo.active+1))}
+      else if(e.key==='ArrowUp'){e.preventDefault();if(combo.items.length)setActive(Math.max(0,combo.active-1))}
+      else if(e.key==='Enter'){e.preventDefault();const w=combo.items[combo.active];if(w)pickManual(w)}
+      else if(e.key==='Escape'){e.preventDefault();closeCombo(true)}
+      else if(e.key==='Tab'){closeCombo(false)}
+    });
+    el('comboList').addEventListener('click',e=>{const li=e.target.closest('.opt');if(!li)return;const w=combo.items[+li.dataset.i];if(w)pickManual(w)});
+    document.addEventListener('click',e=>{if(comboIsOpen()&&!el('combo').contains(e.target))closeCombo(false)});
+    el('gpsBtn').addEventListener('click',locateMe);
+
+    function init(){
+      const saved=readLoc(),sw=saved&&WARD_BY_CODE.get(saved.code);
+      ward=sw||WARD_BY_CODE.get(DEFAULT_CODE);
+      locMode=sw&&(saved.mode==='manual'||saved.mode==='default')?saved.mode:'gps';
+      const note=locMode==='manual'?'Bạn đã chọn phường này thủ công. Bấm 📍 để dùng vị trí của bạn.':locMode==='default'?'Đang xem khu vực mặc định. Bấm 📍 để dùng vị trí của bạn.':'Đang xác định vị trí của bạn…';
+      paintPlace(note);renderAiIdle(AI_IDLE);load();
+      if(locMode==='gps')locateMe()
+    }
+
+    async function fetchData(w){const loc='latitude='+w.lat+'&longitude='+w.lon;
+      const weatherUrl='https://api.open-meteo.com/v1/forecast?'+loc+'&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,apparent_temperature,weather_code,precipitation_probability,precipitation,uv_index&timezone=Asia%2FHo_Chi_Minh&forecast_days=2';
+      const airUrl='https://air-quality-api.open-meteo.com/v1/air-quality?'+loc+'&hourly=us_aqi,uv_index&timezone=Asia%2FHo_Chi_Minh&forecast_days=2';
       const [wr,ar]=await Promise.all([fetch(weatherUrl),fetch(airUrl)]);if(!wr.ok||!ar.ok)throw Error('Không thể tải dữ liệu');
       return {weather:await wr.json(),air:await ar.json()}
     }
+    let loadSeq=0;
+    function clearView(){
+      ['humidity','wind','precip','rainTotal','uv','aqi'].forEach(id=>el(id).textContent='—');
+      el('temperature').textContent='—';el('condition').textContent='Không có dữ liệu';el('feels').textContent='Cảm giác như —';el('feels').className='feels';el('icon').textContent='⛅';
+      ['humidityStat','windStat','precipStat','rainTotalStat','uvStat','aqiStat'].forEach(id=>setStat(id,null));
+      el('warning').className='warning';el('chart').innerHTML='';el('chartLabels').innerHTML='';lastHours=null;lastCurrent=null
+    }
     async function load(){
+      const my=++loadSeq,w=ward,app=el('app');
+      app.classList.add('busy');app.setAttribute('aria-busy','true');
       el('updated').classList.remove('stale');el('updated').textContent='Đang cập nhật…';
-      try{const data=await fetchData();const payload={...data,savedAt:Date.now()};localStorage.setItem(CACHE_KEY,JSON.stringify(payload));render(payload,false)}
-      catch(err){const raw=localStorage.getItem(CACHE_KEY);if(raw){try{const cached=JSON.parse(raw);render(cached,true);return}catch(e){}}el('updated').textContent='Không thể tải dữ liệu — hãy thử lại';el('hourly').innerHTML='<div class="error">Không kết nối được nguồn thời tiết và chưa có dữ liệu lưu trước đó. Vui lòng kiểm tra Internet và bấm Cập nhật.</div>'}
+      try{
+        const data=await fetchData(w);if(my!==loadSeq)return;
+        const payload={...data,savedAt:Date.now(),code:w.code};
+        try{localStorage.setItem(CACHE_KEY,JSON.stringify(payload))}catch(e){}
+        render(payload,false)
+      }catch(err){
+        if(my!==loadSeq)return;
+        try{const cached=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');if(cached&&cached.code===w.code){render(cached,true);return}}catch(e){}
+        clearView();el('updated').textContent='Không thể tải dữ liệu — hãy thử lại';
+        el('hourly').innerHTML='<div class="error">Không kết nối được nguồn thời tiết và chưa có dữ liệu lưu trước đó cho khu vực này. Vui lòng kiểm tra Internet và bấm Cập nhật.</div>'
+      }finally{if(my===loadSeq){app.classList.remove('busy');app.removeAttribute('aria-busy')}}
     }
     function renderAiIdle(msg){el('aiBody').innerHTML=`<p class="ai-empty">${msg}</p>`}
     function renderAiError(msg){el('aiBody').innerHTML=`<p class="ai-error">⚠️ ${msg}</p>`}
     function renderAiResult(r){
-      const range=(r.rain_start&&r.rain_end)?`<span><b>Mưa:</b> ${r.rain_start}–${r.rain_end}</span>`:`<span><b>Mưa:</b> không đáng kể</span>`;
-      el('aiBody').innerHTML=`<p class="ai-summary">${r.summary||''}</p>${r.advice?`<p class="ai-advice">💡 ${r.advice}</p>`:''}<div class="ai-meta">${range}<span><b>Độ tin cậy:</b> ${r.confidence||'—'}</span></div>`
+      const range=(r.rain_start&&r.rain_end)?`<span><b>Mưa:</b> ${esc(r.rain_start)}–${esc(r.rain_end)}</span>`:`<span><b>Mưa:</b> không đáng kể</span>`;
+      el('aiBody').innerHTML=`<p class="ai-summary">${esc(r.summary)}</p>${r.advice?`<p class="ai-advice">💡 ${esc(r.advice)}</p>`:''}<div class="ai-meta">${range}<span><b>Độ tin cậy:</b> ${esc(r.confidence||'—')}</span></div>`
     }
     async function analyzeToday(){
       if(!lastHours){renderAiError('Chưa có dữ liệu thời tiết, đợi trang tải xong rồi thử lại.');return}
-      const btn=el('aiAnalyze');btn.disabled=true;btn.textContent='Đang phân tích…';renderAiIdle('Đang phân tích…');
+      const aiCode=ward.code,btn=el('aiAnalyze');btn.disabled=true;btn.textContent='Đang phân tích…';renderAiIdle('Đang phân tích…');
       try{
         const res=await fetch(AI_WORKER_URL,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({current:lastCurrent,hours:lastHours})});
         if(!res.ok){console.error('AI worker error',res.status,await res.text().catch(()=>''));throw Error('upstream_error')}
         const data=await res.json();
         if(data.error)throw Error(data.error);
-        renderAiResult(data)
-      }catch(err){renderAiError('Không thể phân tích lúc này. Hãy thử lại sau ít phút.')}
+        if(aiCode!==ward.code)return;renderAiResult(data)
+      }catch(err){if(aiCode!==ward.code)return;renderAiError('Không thể phân tích lúc này. Hãy thử lại sau ít phút.')}
       finally{btn.disabled=false;btn.textContent='Phân tích hôm nay'}
     }
     el('aiAnalyze').addEventListener('click',analyzeToday);
-    el('refresh').addEventListener('click',load);load();
+    el('refresh').addEventListener('click',load);init();
   </script>
 </body>
 </html>
