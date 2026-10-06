@@ -22,6 +22,10 @@
     .combo-list{list-style:none;margin:8px 0 0;padding:0;max-height:min(320px,50vh);overflow:auto;overscroll-behavior:contain}.opt{display:flex;justify-content:space-between;gap:10px;padding:10px 11px;border-radius:10px;cursor:pointer}.opt.active{background:rgba(98,217,255,.18)}.opt.sel .w-name{color:var(--blue);font-weight:700}.opt .w-type{align-self:center;color:var(--muted);font-size:.74rem}.opt-empty{padding:14px 11px;color:var(--muted);font-size:.9rem}
     .place-sub{margin:10px 2px 0;color:var(--muted);font-size:.86rem;line-height:1.45;min-height:1.2em}.place-sub.warn{color:var(--warn)}.grid-note{margin:4px 2px 18px;color:#9fb2cc;font-size:.78rem;line-height:1.45}
     #app.busy .hero,#app.busy .card,#app.busy .warning{opacity:.5;transition:opacity .2s}
+    .stat .lvl{display:block;margin-top:3px;font-style:normal;font-size:.72rem;color:var(--muted);line-height:1.3}
+    .rainstrip{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;margin:0 0 8px}.rs{height:14px;border-radius:4px;background:rgba(255,255,255,.1)}.rs.now{outline:2px solid #fff;outline-offset:1px}.rs.l1,.rs-legend .l1{background:rgba(98,217,255,.3)}.rs.l2,.rs-legend .l2{background:rgba(98,217,255,.6)}.rs.l3,.rs-legend .l3{background:#62d9ff}
+    .rs-legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin:0 0 14px;color:var(--muted);font-size:.74rem}.rs-legend i{display:inline-block;width:10px;height:10px;margin-right:5px;border-radius:3px;vertical-align:-1px;background:rgba(255,255,255,.1)}
+    .ai-card .ai-place{margin:0 0 6px;color:var(--blue);font-size:.8rem;font-weight:650}
     @media(max-width:650px){main{width:min(100% - 22px,1120px);padding-top:24px}header{align-items:flex-start;flex-direction:column}.update{text-align:left}.hero{grid-template-columns:1fr;padding:22px}.weather-icon{width:78px;flex-basis:78px;font-size:4rem}.current{gap:12px}.stats{grid-template-columns:repeat(2,1fr)}.hourly{grid-template-columns:repeat(24,82px)}.hour,.day-marker{min-height:155px}.chart-wrap{height:170px}}
   </style>
 </head>
@@ -51,8 +55,8 @@
         <div class="stat" id="windStat"><span>Gió</span><strong id="wind">—</strong></div>
         <div class="stat" id="precipStat"><span>Lượng mưa</span><strong id="precip">—</strong></div>
         <div class="stat" id="rainTotalStat"><span>Tổng mưa 24 giờ tới</span><strong id="rainTotal">—</strong></div>
-        <div class="stat" id="uvStat"><span>UV hiện tại</span><strong id="uv">—</strong></div>
-        <div class="stat" id="aqiStat"><span>US AQI hiện tại</span><strong id="aqi">—</strong></div>
+        <div class="stat" id="uvStat"><span>UV hiện tại</span><strong id="uv">—</strong><em class="lvl" id="uvLabel"></em></div>
+        <div class="stat" id="aqiStat"><span>US AQI hiện tại</span><strong id="aqi">—</strong><em class="lvl" id="aqiLabel"></em></div>
       </div>
     </section>
 
@@ -68,6 +72,8 @@
     </section>
 
     <div class="section-title"><h2>24 giờ sắp tới</h2><p>Nhiệt độ · mưa · lượng mưa theo giờ</p></div>
+    <div class="rainstrip" id="rainStrip" role="img" aria-label="Dải mưa 24 giờ tới"></div>
+    <div class="rs-legend"><span><i class="l0"></i>Không mưa</span><span><i class="l1"></i>Rất nhẹ</span><span><i class="l2"></i>Nhẹ</span><span><i class="l3"></i>Vừa/to</span><span>· mỗi ô là 1 giờ, bắt đầu từ bây giờ</span></div>
     <section class="card"><div class="hourly" id="hourly"></div></section>
 
     <section class="card chart-card"><div class="section-title" style="margin:0"><h2>Diễn biến nhiệt độ</h2><div class="legend"><span><i></i>Nhiệt độ</span><span><i class="r"></i>Xác suất mưa</span></div></div><div class="chart-wrap"><svg id="chart" viewBox="0 0 1000 210" preserveAspectRatio="none" width="100%" height="100%" aria-label="Biểu đồ nhiệt độ dự báo"></svg><div class="chart-labels" id="chartLabels"></div></div></section>
@@ -122,8 +128,10 @@
       el('humidity').textContent=hum+'%';el('wind').textContent=wind+' km/h';el('precip').textContent=precip.toFixed(1)+' mm';el('rainTotal').textContent=rainTotal.toFixed(1)+' mm';
       const aqIdx=aq?.hourly?.time?.findIndex(t=>t.slice(0,13)===c.time.slice(0,13))??-1;const uv=h.uv_index?.[start];const aqi=aqIdx>=0?currentAqi(aq,aqIdx):undefined;
       el('uv').textContent=uv==null?'—':Number(uv).toFixed(1);el('aqi').textContent=aqi==null?'—':Math.round(aqi);
+      el('uvLabel').textContent=uv==null?'':uv<3?'Thấp':uv<6?'Trung bình':uv<8?'Cao':uv<11?'Rất cao':'Cực cao';
+      el('aqiLabel').textContent=aqi==null?'':aqi<=50?'Tốt':aqi<=100?'Trung bình':aqi<=150?'Không tốt cho người nhạy cảm':aqi<=200?'Không tốt':aqi<=300?'Rất không tốt':'Nguy hại';
       setStat('humidityStat',cls(hum,80,90));setStat('windStat',cls(wind,20,35));setStat('precipStat',cls(precip,5,15));setStat('rainTotalStat',cls(rainTotal,10,30));setStat('uvStat',uv==null?null:cls(uv,6,8));setStat('aqiStat',aqi==null?null:cls(aqi,50,100));
-      warningFor(hours);
+      warningFor(hours);renderRainStrip(hours);
       lastHours=hours;lastCurrent={temperature_2m:c.temperature_2m,apparent_temperature:c.apparent_temperature,weather_code:c.weather_code,relative_humidity_2m:c.relative_humidity_2m,wind_speed_10m:c.wind_speed_10m};
       el('updated').classList.toggle('stale',stale);el('updated').textContent=stale?'Dữ liệu cũ · cập nhật lần cuối '+new Date(data.savedAt).toLocaleString('vi-VN'):'Cập nhật lúc '+fmt.format(new Date())+' · GMT+7';
       let previousDate='';
@@ -300,7 +308,13 @@
       return {weather:await wr.json(),air:await ar.json()}
     }
     let loadSeq=0;
-    function clearView(){
+    function renderRainStrip(hours){
+      const names=['Không mưa','Mưa rất nhẹ','Mưa nhẹ','Mưa vừa/to'];
+      el('rainStrip').innerHTML=hours.map((x,i)=>{const mm=Number(x.precipitation)||0,l=mm>=2.5?3:mm>=0.5?2:mm>0?1:0;return `<i class="rs l${l}${i===0?' now':''}" title="${hhmm(x.time)} · ${mm.toFixed(1)} mm · ${names[l]}"></i>`}).join('');
+      const wet=hours.filter(x=>(Number(x.precipitation)||0)>=0.5).length;
+      el('rainStrip').setAttribute('aria-label','Dải mưa 24 giờ tới: '+(wet?wet+' giờ có mưa từ 0,5 mm':'không có giờ mưa đáng kể'))
+    }
+    function clearView(){el('rainStrip').innerHTML='';
       ['humidity','wind','precip','rainTotal','uv','aqi'].forEach(id=>el(id).textContent='—');
       el('temperature').textContent='—';el('condition').textContent='Không có dữ liệu';el('feels').textContent='Cảm giác như —';el('feels').className='feels';el('icon').textContent='⛅';
       ['humidityStat','windStat','precipStat','rainTotalStat','uvStat','aqiStat'].forEach(id=>setStat(id,null));
@@ -326,13 +340,13 @@
     function renderAiError(msg){el('aiBody').innerHTML=`<p class="ai-error">⚠️ ${msg}</p>`}
     function renderAiResult(r){
       const range=(r.rain_start&&r.rain_end)?`<span><b>Mưa:</b> ${esc(r.rain_start)}–${esc(r.rain_end)}</span>`:`<span><b>Mưa:</b> không đáng kể</span>`;
-      el('aiBody').innerHTML=`<p class="ai-summary">${esc(r.summary)}</p>${r.advice?`<p class="ai-advice">💡 ${esc(r.advice)}</p>`:''}<div class="ai-meta">${range}<span><b>Độ tin cậy:</b> ${esc(r.confidence||'—')}</span></div>`
+      el('aiBody').innerHTML=`<p class="ai-place">📍 ${esc(ward.name)} · ${fmt.format(new Date())}</p><p class="ai-summary">${esc(r.summary)}</p>${r.advice?`<p class="ai-advice">💡 ${esc(r.advice)}</p>`:''}<div class="ai-meta">${range}<span><b>Độ tin cậy:</b> ${esc(r.confidence||'—')}</span></div>`
     }
     async function analyzeToday(){
       if(!lastHours){renderAiError('Chưa có dữ liệu thời tiết, đợi trang tải xong rồi thử lại.');return}
       const aiCode=ward.code,btn=el('aiAnalyze');btn.disabled=true;btn.textContent='Đang phân tích…';renderAiIdle('Đang phân tích…');
       try{
-        const res=await fetch(AI_WORKER_URL,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({current:lastCurrent,hours:lastHours})});
+        const res=await fetch(AI_WORKER_URL,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({place:ward.name,current:lastCurrent,hours:lastHours})});
         if(!res.ok){console.error('AI worker error',res.status,await res.text().catch(()=>''));throw Error('upstream_error')}
         const data=await res.json();
         if(data.error)throw Error(data.error);
