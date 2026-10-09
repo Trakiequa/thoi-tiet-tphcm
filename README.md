@@ -2,7 +2,7 @@
 
 Dashboard thời tiết cho **từng phường/xã của TP. Hồ Chí Minh**: tự nhận phường theo GPS của thiết bị, xem nhanh phường khác bằng ô tìm kiếm, kèm dự báo 24 giờ tới và trợ lý AI diễn giải.
 
-**🔗 Xem trực tiếp:** [thoi-tiet-tphcm.pages.dev](https://thoi-tiet-tphcm.pages.dev/thoi-tiet-tphcm)
+** Xem trực tiếp:** [thoi-tiet-tphcm.pages.dev](https://thoi-tiet-tphcm.pages.dev/thoi-tiet-tphcm)
 
 ## Tính năng
 
