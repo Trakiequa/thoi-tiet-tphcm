@@ -45,16 +45,6 @@ python -m http.server 8000
 
 Muốn dùng trợ lý AI, tự deploy Worker của bạn rồi điền URL vào biến `AI_WORKER_URL` trong file html. Không bao giờ để API key trong file html hay commit lên repo.
 
-## Dự định phát triển tiếp
-
-- [x] Cảnh báo giông/mưa lớn, UV, AQI, xem khi mất mạng
-- [x] Thời tiết theo phường/xã, tự nhận vị trí bằng GPS
-- [x] Trợ lý AI diễn giải theo phường
-- [ ] Phường hay xem (ghim nhà/cơ quan)
-- [ ] Cảnh báo nguy cơ ngập đường dựa trên lượng mưa/giờ
-- [ ] Cài được như app trên điện thoại (PWA)
-- [ ] Xuất ảnh chia sẻ nhanh lên mạng xã hội
-
 ## Nguồn dữ liệu & ghi công
 
 - Thời tiết, chất lượng không khí: [Open-Meteo](https://open-meteo.com/)
